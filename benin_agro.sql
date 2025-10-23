@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS parcels (
     ph DECIMAL(5,2) DEFAULT 0,
     organicMatter DECIMAL(5,2) DEFAULT 0,
     notes TEXT,
-    created_by INT,
+    created_by INT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
@@ -160,4 +160,14 @@ CREATE TABLE IF NOT EXISTS transactions (
   user VARCHAR(100),
   notes TEXT,
   FOREIGN KEY (item_id) REFERENCES inventory_items(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS weather_alerts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  region VARCHAR(100) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  severity ENUM('faible', 'modérée', 'élevée', 'extrême') NOT NULL,
+  description TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

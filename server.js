@@ -11,7 +11,8 @@ import financesRoutes from "./routes/finances.js";
 import syncRoutes from "./routes/sync.js";
 import transactionsRoutes from "./routes/transactions.js";
 import statsRoutes from "./routes/stats.js";
-
+import dashboardRoutes from "./src/routes/dashboard.routes.js";
+import weatherAlertsRoutes from "./src/routes/weatherAlerts.js";
 
 dotenv.config();
 
@@ -38,6 +39,8 @@ app.use("/api/finances", financesRoutes);
 app.use("/api/sync", syncRoutes);
 app.use("/api/transactions", transactionsRoutes);
 app.use("/api", statsRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/weather-alerts", weatherAlertsRoutes);
 
 
 app.get("/", (req, res) => {
