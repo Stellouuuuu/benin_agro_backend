@@ -11,17 +11,19 @@ import financesRoutes from "./routes/finances.js";
 import syncRoutes from "./routes/sync.js";
 import transactionsRoutes from "./routes/transactions.js";
 import statsRoutes from "./routes/stats.js";
-import dashboardRoutes from "./src/routes/dashboard.routes.js";
-import weatherAlertsRoutes from "./src/routes/weatherAlerts.js";
+import dashboardRoutes from "./routes/dashboard.js";
+import weatherAlertsRoutes from "./routes/weatherAlerts.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middlewares
+// ✅ Port par défaut si .env ne contient rien
+const PORT = process.env.PORT;
+
+// ✅ Autoriser ton frontend React (port 5173)
 app.use(cors({
-  origin: "http://localhost:8080", // ton frontend
+  origin: ["http://localhost:8080"], // <-- frontend Vite
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
@@ -30,7 +32,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes
+// ✅ Routes
 app.use("/api/parcels", parcelsRoutes);
 app.use("/api/crops", cropsRoutes);
 app.use("/api/harvests", harvestsRoutes);
@@ -42,12 +44,12 @@ app.use("/api", statsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/weather-alerts", weatherAlertsRoutes);
 
-
+// ✅ Test route
 app.get("/", (req, res) => {
   res.json({ message: "Backend Agro Node.js fonctionne ✅" });
 });
 
-// Démarrage du serveur
+// ✅ Lancer le serveur
 app.listen(PORT, () => {
   console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
 });
